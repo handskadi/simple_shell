@@ -12,7 +12,8 @@ void env_print(void)
 
 	while (*ev != NULL)
 	{
-		printf("%s\n", *ev);
+		__print(*ev);
+		__print("\n");
 		ev++;
 	}
 }
