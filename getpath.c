@@ -85,6 +85,11 @@ void execute_command(char **argv)
 	if (argv)
 	{
 		cmd = argv[0];
+		if (string_compare(cmd, "exit") == 0)
+		{
+			free(cmd);
+			exit(EXIT_SUCCESS);
+		}
 		actual_cmd = get_path(cmd);
 		if (execve(actual_cmd, argv, NULL) == -1)
 		{
