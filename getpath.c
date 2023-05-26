@@ -79,19 +79,18 @@ char *get_path(char *cmd)
 
 void execute_command(char **argv)
 {
-	char *cmd = argv[0];
-	char *actual_cmd = get_path(cmd);
+	char *cmd = NULL;
+	char *actual_cmd = NULL;
 
-	if (execve(actual_cmd, argv, NULL) == -1)
+	if (argv)
 	{
-		 if (string_compare(cmd, "exit") == 0)
-		 {
-			 exit(EXIT_SUCCESS);
-		 }
-		 else
-		 {
-			 __print("./hsh: No such file or directory\n");
-		 }
+		cmd = argv[0];
+		actual_cmd = get_path(cmd);
+		if (execve(actual_cmd, argv, NULL) == -1)
+		{
+			__print("./hsh: No such file or directory\n");
+			/*perror("Oops!..");*/
+		}
 	}
 }
 
