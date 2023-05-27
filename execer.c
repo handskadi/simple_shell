@@ -244,9 +244,11 @@ static int execBuiltIn(token_t **token, char **env)
 void executeToken(token_t **token, char **env)
 {
     pid_t pid = -1;
+    size_t length = 0;
     int ret_code = 0;
     char **command = NULL;
     char *absolute_path = NULL;
+    char holder[1024];
 
     /* Check arg */
     if (*token == NULL || (*token)->list_size == 0)
@@ -258,9 +260,20 @@ void executeToken(token_t **token, char **env)
         return_value = ret_code;
         return;
     }
-
+    /* Check if contain absolut path */
+    if ((*token)->cmd_list[0][0] == '/')
+    {
+        length = stringLength((*token)->cmd_list[0]);
+        absolute_path = stringCpy((*token)->cmd_list[0], 0, length - 1);
+    }
+    else if ((*token)->cmd_list[0][0] == '.')
+    {
+        absolute_path = (char *) malloc(1024);
+        getcwd(holder, sizeof(holder));
+        sprintf(absolute_path, "%s/%s", holder, (*token)->cmd_list[0]);
+    }
     /* Check if the executable exists */
-    if (getAbsolutePath((*token)->cmd_list[0], env, &absolute_path) == 0)
+    else if (getAbsolutePath((*token)->cmd_list[0], env, &absolute_path) == 0)
     {
         fprintf(stderr, "%s: %d: %s: not found\n", shell_name, 1, (*token)->cmd_list[0]);
         return_value = 127;
