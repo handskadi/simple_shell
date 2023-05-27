@@ -23,7 +23,7 @@ char *stringCpy(char *src, int start, int end);
 void stringCpyIn(char *dest, char *src, size_t size);
 int stringCompare(const char *s1, const char *s2);
 int stringNCompare(const char *s1, const char *s2, size_t n);
-char *strToken(char* str, const char* delim);
+char *strToken(char *str, const char *delim);
 ssize_t getUserLine(char *buffer, size_t size, int fd);
 
 

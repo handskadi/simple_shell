@@ -33,7 +33,7 @@ int main(int argc, char **argv, char **envp)
     
     while (1)
     {
-        if (isatty(fileno(stdin)))
+        if (isatty(fileno(stdin)) && fd == STDIN_FILENO)
         {
             printf(PROMPT);
             fflush(stdout);
@@ -50,5 +50,5 @@ int main(int argc, char **argv, char **envp)
         executeToken(&token, envp);
         distroyToken(&token);
     }
-    return 0;
+    exit(return_value);
 }

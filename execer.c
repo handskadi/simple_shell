@@ -9,9 +9,8 @@ static char **buildCommand(token_t *token)
     char **command = (char **) malloc((token->list_size + 1) * sizeof(char *));
 
     for (i = 0; i < token->list_size; i++)
-    {
         command[i] = stringCpy(token->cmd_list[i], 0, stringLength(token->cmd_list[i]) - 1);
-    }
+        
     command[i] = NULL;
 
     return command;
@@ -125,7 +124,6 @@ static int execute_cd(token_t **token, char **env)
 
 static int execBuiltIn(token_t **token, char **env)
 {
-    int ret_value = 0;
     char **env_parser = NULL;
     char holder[MAX_WORD_LEN];
     size_t parser = 0, length = 0;
@@ -135,9 +133,9 @@ static int execBuiltIn(token_t **token, char **env)
     if (stringCompare((*token)->cmd_list[0], "exit") == 0)
     {
         if ((*token)->list_size > 1)
-            ret_value = atoi((*token)->cmd_list[1]);
+            return_value = atoi((*token)->cmd_list[1]);
         distroyToken(token);
-        exit(ret_value);
+        exit(return_value);
     }
     if (stringCompare((*token)->cmd_list[0], "env") == 0)
     {
@@ -294,7 +292,7 @@ void executeToken(token_t **token, char **env)
         ret_code = execve(absolute_path, command, env);
         fprintf(stderr, "%s: %d: ", shell_name, ret_code * -1);
         perror(command[0]);
-        exit(1);
+        exit(ret_code);
     }
     else
     {
