@@ -45,4 +45,4 @@ This project is licensed under the ALX License.
 
 ## Contact
 
-If you have any questions or suggestions regarding this project, please feel free to contact Mohamed KADI or Souhail Kadiri, the authors of this project, at [email address].
+If you have any questions or suggestions regarding this project, please feel free to contact Mohamed KADI the authors of this project, at handskadi@gmail.com
